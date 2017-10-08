@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>@brouhana :: htx</title>
+	<link href="/hear-no-evil-monkey_1f649.png.png" rel="icon" type="image/png">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+	</script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+	<style>
+	@import url('https://fonts.googleapis.com/css?family=Work+Sans:200,400,500,600,700,900');
+	body {
+	   margin: 0;
+	   padding: 0;
+	   font-family: 'Work Sans', sans-serif !important;
+	   -webkit-font-smoothing: antialiased;
+	   -moz-osx-font-smoothing: grayscale;
+	}
+	       fa { color : #0f2615 !important }
+	.container {
+	   position: fixed;
+	   top: 50%;
+	   left: 50%;
+	   transform: translate(-50%, -50%);
+	}
+	h1.text {
+	   -webkit-text-fill-color: transparent;
+	   margin-top: 0px;
+	   background: -webkit-linear-gradient(transparent, transparent), url(https://media.giphy.com/media/l1J9wDS3HQjq3TbIQ/giphy-downsized.gif);    background: -o-linear-gradient(transparent, transparent);
+	   -webkit-background-clip: text;
+	   background-clip: text;
+	   margin-bottom: 0px;
+	   background-size: contain;
+	   font-size: 110px;
+	   line-height: 90px;
+	   font-family: 'Work Sans', sans-serif;
+	   font-weight: 900;
+	}
+	h1.text {
+	   text-align: center;
+	}
+	span.last {
+	   display: block;
+	   margin-left: 5px;
+	}
+	.socialLinks {
+	   margin-top: 25px;
+	   z-index: 1000;
+	   margin-left: 2px;
+	}
+	.socialLink-text {
+	   font-size: 18px !important;
+	   padding-left: 10px;
+	   position: relative;
+	   bottom: 5px;
+	   font-weight: 500;
+	   color: #0E2415;
+	}
+	span .at {
+	   color: #6F7C74;
+	}
+	a {
+	   text-decoration: none;
+	   color: inherit;
+	}
+	a:hover {
+	   opacity: 0.5;
+	}
+	.socialLinks .socialLinks-Snap {
+	   width: 184px;
+	   height: 28px;
+	   margin-left: 32px;
+	   cursor: pointer;
+	   transition-timing-function: ease-in-out;
+	   -webkit-transition-timing-function: ease-in-out;
+	   -moz-user-select: none;
+	   -webkit-user-select: none;
+	   -ms-user-select: none;
+	   user-select: none;
+	   -webkit-user-drag: none;
+	   user-drag: none;
+	   -webkit-touch-callout: none;
+	}
+	.delay-1 {
+	   animation-delay: ;
+	}
+	.delay-1 {
+	   animation-delay: .5s;
+	}
+	.delay-2 {
+	   animation-delay: 1.2s;
+	}
+	.delay-3 {
+	   animation-delay: 1.5s;
+	}
+
+	/**
+	   * Modal 
+	   **/
+
+	.modal-overlay {
+	   position: absolute;
+	   top: 0;
+	   left: 0;
+	   right: 0;
+	   bottom: 0;
+	   margin: auto;
+	   background-color: #fff;
+	   opacity: 0;
+	   visibility: hidden;
+	   z-index: 40;
+	   -moz-transition: opacity 0.25s ease 0s, visibility 0.35s linear;
+	   -o-transition: opacity 0.25s ease 0s, visibility 0.35s linear;
+	   -webkit-transition: opacity 0.25s ease, visibility 0.35s linear;
+	   -webkit-transition-delay: 0s, 0s;
+	   transition: opacity 0.25s ease 0s, visibility 0.35s linear;
+	}
+	.modal-overlay.state-show {
+	   opacity: 1;
+	   visibility: visible;
+	   -moz-transition-delay: 0s;
+	   -o-transition-delay: 0s;
+	   -webkit-transition-delay: 0s;
+	   transition-delay: 0s;
+	   -moz-transition-duration: 0.2s, 0s;
+	   -o-transition-duration: 0.2s, 0s;
+	   -webkit-transition-duration: 0.2s, 0s;
+	   transition-duration: 0.2s, 0s;
+	}
+	.modal-frame {
+	   position: absolute;
+	   top: 0;
+	   left: 0;
+	   right: 0;
+	   bottom: 0;
+	   margin: auto;
+	   z-index: 50;
+	   /*     display: table; */
+	   display: -webkit-flex;
+	   display: flex;
+	   -webkit-align-items: center;
+	   align-items: center;
+	   -moz-box-align: center;
+	   -webkit-box-pack: center;
+	   -webkit-justify-content: center;
+	   justify-content: center;
+	   -moz-box-pack: center;
+	   -ms-flex-pack: center;
+	   width: 100%;
+	   text-align: center;
+	   visibility: hidden;
+	}
+	.modal-frame.state-appear {
+	   visibility: visible;
+	}
+	.modal-frame.state-appear .modal-inset {
+	   -moz-animation: modalComeIn 0.25s ease;
+	   -webkit-animation: modalComeIn 0.25s ease;
+	   animation: modalComeIn 0.25s ease;
+	   visibility: visible;
+	   /* to keep @ final state */
+	}
+	.modal-frame.state-appear .modal-body {
+	   opacity: 1;
+	   -moz-transform: translateY(0) scale(1, 1);
+	   -ms-transform: translateY(0) scale(1, 1);
+	   -webkit-transform: translateY(0) scale(1, 1);
+	   transform: translateY(0) scale(1, 1);
+	}
+	.modal-frame.state-leave {
+	   visibility: visible;
+	}
+	.modal-frame.state-leave .modal-inset {
+	   -moz-animation: modalHeadOut 0.35s ease 0.1s;
+	   -webkit-animation: modalHeadOut 0.35s ease 0.1s;
+	   animation: modalHeadOut 0.35s ease 0.1s;
+	   visibility: visible;
+	}
+	.modal-frame.state-leave .modal-body {
+	   opacity: 0;
+	   -moz-transition-delay: 0s;
+	   -o-transition-delay: 0s;
+	   -webkit-transition-delay: 0s;
+	   transition-delay: 0s;
+	   -moz-transition-duration: 0.35s;
+	   -o-transition-duration: 0.35s;
+	   -webkit-transition-duration: 0.35s;
+	   transition-duration: 0.35s;
+	   -moz-transition-timing-function: ease;
+	   -o-transition-timing-function: ease;
+	   -webkit-transition-timing-function: ease;
+	   transition-timing-function: ease;
+	   -moz-transform: translateY(25px);
+	   -ms-transform: translateY(25px);
+	   -webkit-transform: translateY(25px);
+	   transform: translateY(25px);
+	}
+	@-moz-document url-prefix() {
+	   .modal-frame {
+	       height: calc(100% - 55px);
+	   }
+	}
+	.modal {
+	   display: block;
+	   vertical-align: middle;
+	   text-align: center;
+	}
+	.modal-inset {
+	   position: relative;
+	   padding: 0px !important;
+	   background-color: rgba(255, 255, 255, 0);
+	   min-width: 0px;
+	   min-height: 0px;
+	   margin: auto;
+	   visibility: hidden;
+	   -moz-backface-visibility: hidden;
+	   -webkit-backface-visibility: hidden;
+	   backface-visibility: hidden;
+	   -moz-transform: translate3d(0, 0, 0);
+	   -ms-transform: translate3d(0, 0, 0);
+	   -webkit-transform: translate3d(0, 0, 0);
+	   transform: translate3d(0, 0, 0);
+	   -moz-transform-style: preserve-3d;
+	   -webkit-transform-style: preserve-3d;
+	   transform-style: preserve-3d;
+	}
+	.modal-inset .close {
+	   display: block;
+	   cursor: pointer;
+	   position: absolute;
+	   top: 30px;
+	   right: 10px;
+	   padding: 10px;
+	   opacity: .4;
+	}
+	.modal-inset .close:hover {
+	   opacity: 1;
+	}
+	.modal-body {
+	   margin: auto;
+	   opacity: 0;
+	   -moz-transform: translateY(0) scale(0.8, 0.8);
+	   -ms-transform: translateY(0) scale(0.8, 0.8);
+	   -webkit-transform: translateY(0) scale(0.8, 0.8);
+	   transform: translateY(0) scale(0.8, 0.8);
+	   -moz-transition-property: opacity, -moz-transform;
+	   -o-transition-property: opacity, -o-transform;
+	   -webkit-transition-property: opacity, -webkit-transform;
+	   transition-property: opacity, transform;
+	   -moz-transition-duration: 0.25s;
+	   -o-transition-duration: 0.25s;
+	   -webkit-transition-duration: 0.25s;
+	   transition-duration: 0.25s;
+	   -moz-transition-delay: 0.1s;
+	   -o-transition-delay: 0.1s;
+	   -webkit-transition-delay: 0.1s;
+	   transition-delay: 0.1s;
+	}
+	.modal-body h3 {
+	   font-weight: 700;
+	   padding-bottom: 22px;
+	   display: block;
+	   color: #F2594B;
+	   text-align: center;
+	}
+	.modal-body p {
+	   padding-bottom: 20px;
+	}
+	.modal-body .ps {
+	   font-size: 12px;
+	   opacity: .3;
+	}
+	@-webkit-keyframes modalComeIn {
+	   0% {
+	       visibility: hidden;
+	       opacity: 0;
+	       -moz-transform: scale(0.8, 0.8);
+	       -ms-transform: scale(0.8, 0.8);
+	       -webkit-transform: scale(0.8, 0.8);
+	       transform: scale(0.8, 0.8);
+	   }
+	   65.5% {
+	       -moz-transform: scale(1.03, 1.03);
+	       -ms-transform: scale(1.03, 1.03);
+	       -webkit-transform: scale(1.03, 1.03);
+	       transform: scale(1.03, 1.03);
+	   }
+	   100% {
+	       visibility: visible;
+	       opacity: 1;
+	       -moz-transform: scale(1, 1);
+	       -ms-transform: scale(1, 1);
+	       -webkit-transform: scale(1, 1);
+	       transform: scale(1, 1);
+	   }
+	}
+	@-moz-keyframes modalComeIn {
+	   0% {
+	       visibility: hidden;
+	       opacity: 0;
+	       -moz-transform: scale(0.8, 0.8);
+	       -ms-transform: scale(0.8, 0.8);
+	       -webkit-transform: scale(0.8, 0.8);
+	       transform: scale(0.8, 0.8);
+	   }
+	   65.5% {
+	       -moz-transform: scale(1.03, 1.03);
+	       -ms-transform: scale(1.03, 1.03);
+	       -webkit-transform: scale(1.03, 1.03);
+	       transform: scale(1.03, 1.03);
+	   }
+	   100% {
+	       visibility: visible;
+	       opacity: 1;
+	       -moz-transform: scale(1, 1);
+	       -ms-transform: scale(1, 1);
+	       -webkit-transform: scale(1, 1);
+	       transform: scale(1, 1);
+	   }
+	}
+	@keyframes modalComeIn {
+	   0% {
+	       visibility: hidden;
+	       opacity: 0;
+	       -moz-transform: scale(0.8, 0.8);
+	       -ms-transform: scale(0.8, 0.8);
+	       -webkit-transform: scale(0.8, 0.8);
+	       transform: scale(0.8, 0.8);
+	   }
+	   65.5% {
+	       -moz-transform: scale(1.03, 1.03);
+	       -ms-transform: scale(1.03, 1.03);
+	       -webkit-transform: scale(1.03, 1.03);
+	       transform: scale(1.03, 1.03);
+	   }
+	   100% {
+	       visibility: visible;
+	       opacity: 1;
+	       -moz-transform: scale(1, 1);
+	       -ms-transform: scale(1, 1);
+	       -webkit-transform: scale(1, 1);
+	       transform: scale(1, 1);
+	   }
+	}
+	@-webkit-keyframes modalHeadOut {
+	   0% {
+	       visibility: visible;
+	       opacity: 1;
+	       -moz-transform: translateY(0) scale(1, 1);
+	       -ms-transform: translateY(0) scale(1, 1);
+	       -webkit-transform: translateY(0) scale(1, 1);
+	       transform: translateY(0) scale(1, 1);
+	   }
+	   100% {
+	       visibility: hidden;
+	       opacity: 0;
+	       -moz-transform: translateY(35px) scale(0.97, 0.97);
+	       -ms-transform: translateY(35px) scale(0.97, 0.97);
+	       -webkit-transform: translateY(35px) scale(0.97, 0.97);
+	       transform: translateY(35px) scale(0.97, 0.97);
+	   }
+	}
+	@-moz-keyframes modalHeadOut {
+	   0% {
+	       visibility: visible;
+	       opacity: 1;
+	       -moz-transform: translateY(0) scale(1, 1);
+	       -ms-transform: translateY(0) scale(1, 1);
+	       -webkit-transform: translateY(0) scale(1, 1);
+	       transform: translateY(0) scale(1, 1);
+	   }
+	   100% {
+	       visibility: hidden;
+	       opacity: 0;
+	       -moz-transform: translateY(35px) scale(0.97, 0.97);
+	       -ms-transform: translateY(35px) scale(0.97, 0.97);
+	       -webkit-transform: translateY(35px) scale(0.97, 0.97);
+	       transform: translateY(35px) scale(0.97, 0.97);
+	   }
+	}
+	@keyframes modalHeadOut {
+	   0% {
+	       visibility: visible;
+	       opacity: 1;
+	       -moz-transform: translateY(0) scale(1, 1);
+	       -ms-transform: translateY(0) scale(1, 1);
+	       -webkit-transform: translateY(0) scale(1, 1);
+	       transform: translateY(0) scale(1, 1);
+	   }
+	   100% {
+	       visibility: hidden;
+	       opacity: 0;
+	       -moz-transform: translateY(35px) scale(0.97, 0.97);
+	       -ms-transform: translateY(35px) scale(0.97, 0.97);
+	       -webkit-transform: translateY(35px) scale(0.97, 0.97);
+	       transform: translateY(35px) scale(0.97, 0.97);
+	   }
+	}
+	.click-to-closeImg {
+	   width: 75px;
+	   margin-top: 15px;
+	   -moz-user-select: none;
+	   -webkit-user-select: none;
+	   -ms-user-select: none;
+	   user-select: none;
+	   -webkit-user-drag: none;
+	   user-drag: none;
+	   -webkit-touch-callout: none;
+	}
+	</style>
+	<script>
+	      /**
+	   * Modal
+	   **/
+	   $(document).on('ready', function(){
+	      $modal = $('.modal-frame');
+	      $overlay = $('.modal-overlay');
+	      $modal.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e){
+	        if($modal.hasClass('state-leave')) {
+	          $modal.removeClass('state-leave');
+	        }
+	      });
+	      $('.close').on('click', function(){
+	        $overlay.removeClass('state-show');
+	        $modal.removeClass('state-appear').addClass('state-leave');
+	      });
+	      $('.open').on('click', function(){
+	        $overlay.addClass('state-show');
+	        $modal.removeClass('state-leave').addClass('state-appear');
+	      });
+	    });
+	</script>
+	<title></title>
+</head>
+<body>
+	<div class="container">
+		<h1 class="text animated fadeIn delay-1">BRENNAN<span class="last">ROUHANA<span></span></span></h1>
+		<div class="socialLinks">
+			<span class="last"><span class="socialLink-insta animated fadeIn delay-2"><a href="http://instagram.com/brouhana" target="_blank"><i aria-hidden="true" class="fa fa-instagram" style="font-size: 33px;"></i><span class="socialLink-text"><span class="at">@</span>brouhana</span></a></span> <span class="socialLink-insta animated fadeIn delay-3" style="margin-left: 25px"><a class="fancy-btn open" style="cursor: pointer"><i aria-hidden="true" class="fa fa-snapchat-ghost" style="font-size: 33px;"></i><span class="socialLink-text">brennan_pro</span></a></span></span>
+		</div>
+	</div>
+	<div class="modal-frame">
+		<div class="modal close">
+			<div class="modal-inset">
+				<div class="button close">
+					close
+				</div>
+				<div class="modal-body"><img draggable="false" ondragstart="return false" src="https://image.prntscr.com/image/Zg9iZO7kT7qrQg97oOVDYQ.png" style="width:200px;height:200px"><br>
+				<img class="click-to-closeImg" draggable="false" ondragstart="return false" src="https://image.prntscr.com/image/yJ7xvQetSE_xmil7rz_C9w.png"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-overlay close"></div>
+	<script src="https://use.fontawesome.com/485702568f.js">
+	</script>
+</body>
+</html>
